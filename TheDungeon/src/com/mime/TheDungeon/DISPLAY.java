@@ -1,6 +1,7 @@
 package com.mime.TheDungeon;
 
 import java.awt.Canvas;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
@@ -22,11 +23,17 @@ public class DISPLAY extends Canvas implements Runnable {
 	private Thread thread;
 	private boolean running = false;
 	private SCREEN screen;
+	private GAME game;
 	private BufferedImage img;
 	private int pixels[];
 
 	public DISPLAY() {
+		Dimension size = new Dimension(width, height);
+		setPreferredSize(size);
+		setMinimumSize(size);
+		setMaximumSize(size);
 		screen = new SCREEN(width, height);
+		game = new GAME();
 		img = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 		pixels = ((DataBufferInt) img.getRaster().getDataBuffer()).getData();
 	}
@@ -96,7 +103,7 @@ public class DISPLAY extends Canvas implements Runnable {
 			createBufferStrategy(3);
 			return;
 		}
-		screen.render();
+		screen.render(game);
 
 		for (int i = 0; i < width * height; i++) {
 			pixels[i] = screen.pixels[i];
@@ -108,7 +115,7 @@ public class DISPLAY extends Canvas implements Runnable {
 	}
 
 	private void tick() {
-		// TODO Auto-generated method stub
+		game.tick();
 
 	}
 
@@ -119,7 +126,6 @@ public class DISPLAY extends Canvas implements Runnable {
 		frame.pack();
 		frame.setTitle(title);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(width, height);
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
 		frame.setVisible(true);

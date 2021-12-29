@@ -2,30 +2,35 @@ package com.mime.TheDungeon.graphics;
 
 import java.util.Random;
 
+import com.mime.TheDungeon.GAME;
+
 public class SCREEN extends RENDER {
 
 	private RENDER test;
+	private RENDER3D render;
 
 	public SCREEN(int width, int height) {
 		super(width, height);
 		Random random = new Random();
+		render = new RENDER3D(width, height);
 		test = new RENDER(256, 256);
 		for (int i = 0; i < 256 * 256; i++) {
 			test.pixels[i] = random.nextInt();
 		}
 	}
 
-	public void render() {
-		for (int i = 0; i<width*height; i++) {
+	public void render(GAME game) {
+		for (int i = 0; i < width * height; i++) {
 			pixels[i] = 0;
 		}
-		for (int i = 0; i<25; i++) {
-		
-		int anim = (int) (Math.sin((System.currentTimeMillis()+i*16) % 2000.0 / 2000.0 * Math.PI * 2) * 200);
-		int anim2 = (int) (Math.cos((System.currentTimeMillis()+i*16) % 2000.0 / 2000.0 * Math.PI * 2) * 200);
+		for (int i = 0; i < 50; i++) {
 
-		draw(test, (width - 256) / 2 + anim, (height - 256) / 2 + anim2);
+			int anim1 = (int) (Math.sin((game.time + i * 2) % 1000.0 / 100) * 100);
+			int anim2 = (int) (Math.cos((game.time + i * 2) % 1000.0 / 100) * 100);
+
 		}
+		render.floor();
+		draw(render, 0, 0);
 	}
 
 }
