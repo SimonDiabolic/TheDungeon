@@ -24,6 +24,7 @@ public class DISPLAY extends Canvas implements Runnable {
 	private SCREEN screen;
 	private BufferedImage img;
 	private int pixels[];
+
 	public DISPLAY() {
 		screen = new SCREEN(width, height);
 		img = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
@@ -54,9 +55,37 @@ public class DISPLAY extends Canvas implements Runnable {
 	}
 
 	public void run() {
+		int frames = 0;
+		double unprocessedSeconds = 0;
+		long previousTime = System.nanoTime();
+		double secondsPerTick = 1 / 60.0;
+		int tickCount = 0;
+		boolean ticked = false;
+
 		while (running) {
-			tick();
+			long currentTime = System.nanoTime();
+			long passedTime = currentTime - previousTime;
+			previousTime = currentTime;
+			unprocessedSeconds += passedTime / 1000000000.0;
+
+			while (unprocessedSeconds > secondsPerTick) {
+				tick();
+				unprocessedSeconds -= secondsPerTick;
+				ticked = true;
+				tickCount++;
+				if (tickCount % 60 == 0) {
+					System.out.println(frames + " FPS");
+					previousTime += 1000;
+					frames = 0;
+
+				}
+			}
+			if (ticked) {
+				render();
+				frames++;
+			}
 			render();
+			frames++;
 		}
 	}
 
@@ -68,7 +97,7 @@ public class DISPLAY extends Canvas implements Runnable {
 			return;
 		}
 		screen.render();
-		
+
 		for (int i = 0; i < width * height; i++) {
 			pixels[i] = screen.pixels[i];
 		}

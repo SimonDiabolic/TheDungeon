@@ -23,7 +23,8 @@ public class RENDER {
 					continue;
 
 				int alpha = render.pixels[x + y * render.width];
-				if (alpha < 0) {
+				
+				if (alpha > 0) {
 					pixels[xPix + yPix * width] = alpha;
 				}
 			}
