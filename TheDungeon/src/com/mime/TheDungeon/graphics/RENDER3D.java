@@ -1,36 +1,46 @@
 package com.mime.TheDungeon.graphics;
 
+import com.mime.TheDungeon.GAME;
+
 public class RENDER3D extends RENDER {
 
 	public RENDER3D(int width, int height) {
 		super(width, height);
 	}
 
-	double time = 0;
+	public void floor(GAME game) {
 
-	public void floor() {
+		double ceilingPosition = 8.0;
+		double floorPosition = 8.0;
+
+		double forward = game.time / 10.0;
+		double right = game.time / 10.0;
+
+		double rotation = 0;
+		double cosinus = Math.cos(rotation);
+		double sinus = Math.sin(rotation);
+
 		for (int y = 0; y < height; y++) {
 			double ceiling = (y - height / 2.0) / height;
 
+			double z = floorPosition / ceiling;
 			if (ceiling < 0) {
-				ceiling = -ceiling;
+
+				z = ceilingPosition / -ceiling;
 			}
 
-			double z = 8.0 / ceiling;
-
-			time += 0.0005;
 			for (int x = 0; x < width; x++) {
 				double depth = (x - width / 2.0) / height;
 				depth *= z;
-				double xx = depth;
-				double yy = z + time;
+				double xx = depth * cosinus + z * sinus + right;
+				double yy = z * cosinus - depth * sinus + forward;
 				int xPix = (int) (xx);
 				int yPix = (int) (yy);
 				pixels[x + y * width] = ((xPix & 15) * 16) | ((yPix & 15) * 16) << 8;
-
+//if(z > renderDistance)return
 			}
 
 		}
 	}
- 
+
 }
