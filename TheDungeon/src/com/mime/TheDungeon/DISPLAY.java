@@ -15,8 +15,8 @@ public class DISPLAY extends Canvas implements Runnable {
 
 	private static final long serialVersionUID = 1L;
 
-	public static final int width = 800;
-	public static final int height = 600;
+	public static final int width = 1280;
+	public static final int height = 720;
 	public static final String title = "TheDungeon";
 
 	private Thread thread;
@@ -24,8 +24,6 @@ public class DISPLAY extends Canvas implements Runnable {
 	private SCREEN screen;
 	private BufferedImage img;
 	private int pixels[];
-	private RENDER render;
-
 	public DISPLAY() {
 		screen = new SCREEN(width, height);
 		img = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
@@ -63,7 +61,7 @@ public class DISPLAY extends Canvas implements Runnable {
 	}
 
 	private void render() {
-		// TODO Auto-generated method stub
+		//
 		BufferStrategy bs = this.getBufferStrategy();
 		if (bs == null) {
 			createBufferStrategy(3);

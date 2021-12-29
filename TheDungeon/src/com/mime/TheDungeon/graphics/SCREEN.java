@@ -19,10 +19,10 @@ public class SCREEN extends RENDER {
 		for (int i = 0; i<width*height; i++) {
 			pixels[i] = 0;
 		}
-		for (int i = 0; i<200; i++) {
+		for (int i = 0; i<100; i++) {
 		
-		int anim = (int) (Math.sin((System.currentTimeMillis()+i) % 1000.0 / 1000.0 * Math.PI * 2) * 100);
-		int anim2 = (int) (Math.cos((System.currentTimeMillis()+i) % 1000.0 / 1000.0 * Math.PI * 2) * 100);
+		int anim = (int) (Math.sin((System.currentTimeMillis()+i*2) % 2000.0 / 2000.0 * Math.PI * 2) * 200);
+		int anim2 = (int) (Math.cos((System.currentTimeMillis()+i*2) % 2000.0 / 2000.0 * Math.PI * 2) * 200);
 
 		draw(test, (width - 256) / 2 + anim, (height - 256) / 2 + anim2);
 		}
