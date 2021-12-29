@@ -13,10 +13,10 @@ public class RENDER3D extends RENDER {
 		double ceilingPosition = 8.0;
 		double floorPosition = 8.0;
 
-		double forward = game.time / 10.0;
-		double right = game.time / 10.0;
+		double forward = game.controls.z;
+		double right = game.controls.x;
 
-		double rotation = 0;
+		double rotation = game.controls.rotation;
 		double cosinus = Math.cos(rotation);
 		double sinus = Math.sin(rotation);
 
@@ -32,10 +32,10 @@ public class RENDER3D extends RENDER {
 			for (int x = 0; x < width; x++) {
 				double depth = (x - width / 2.0) / height;
 				depth *= z;
-				double xx = depth * cosinus + z * sinus + right;
-				double yy = z * cosinus - depth * sinus + forward;
-				int xPix = (int) (xx);
-				int yPix = (int) (yy);
+				double xx = depth * cosinus + z * sinus; //+right
+				double yy = z * cosinus - depth * sinus; //+forward
+				int xPix = (int) (xx+right);
+				int yPix = (int) (yy+forward);
 				pixels[x + y * width] = ((xPix & 15) * 16) | ((yPix & 15) * 16) << 8;
 //if(z > renderDistance)return
 			}

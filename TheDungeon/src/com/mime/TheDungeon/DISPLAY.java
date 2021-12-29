@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 
 import com.mime.TheDungeon.graphics.RENDER;
 import com.mime.TheDungeon.graphics.SCREEN;
+import com.mime.TheDungeon.input.INPUTHANDLER;
 
 public class DISPLAY extends Canvas implements Runnable {
 
@@ -26,6 +27,7 @@ public class DISPLAY extends Canvas implements Runnable {
 	private GAME game;
 	private BufferedImage img;
 	private int pixels[];
+	private INPUTHANDLER input;
 
 	public DISPLAY() {
 		Dimension size = new Dimension(width, height);
@@ -36,6 +38,12 @@ public class DISPLAY extends Canvas implements Runnable {
 		game = new GAME();
 		img = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 		pixels = ((DataBufferInt) img.getRaster().getDataBuffer()).getData();
+		
+		input = new INPUTHANDLER();
+		addKeyListener(input);
+		addFocusListener(input);
+		addMouseListener(input);
+		addMouseMotionListener(input);
 	}
 
 	private void start() {
@@ -115,7 +123,7 @@ public class DISPLAY extends Canvas implements Runnable {
 	}
 
 	private void tick() {
-		game.tick();
+		game.tick(input.key);
 
 	}
 
