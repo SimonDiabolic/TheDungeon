@@ -1,5 +1,7 @@
 package simon.TheDungeon.graphics;
 
+import java.util.Random;
+
 import simon.TheDungeon.GAME;
 import simon.TheDungeon.input.CONTROLLER;
 
@@ -12,7 +14,6 @@ public class RENDER3D extends RENDER {
 		super(width, height);
 		zBuffer = new double[width * height];
 	}
-
 	public void floor(GAME game) {
 
 		double ceilingPosition = 8000; // 8000 for no ceiling
@@ -58,7 +59,7 @@ public class RENDER3D extends RENDER {
 				int xPix = (int) (xx + right);
 				int yPix = (int) (yy + forward);
 				zBuffer[x + y * width] = z;
-				pixels[x + y * width] = TEXTURE.floor.pixels[(xPix & 7) + (yPix & 7) * 32/*Times Texture size*/]; 
+				pixels[x + y * width] = TEXTURE.floor.pixels[(xPix & 7) + (yPix & 7) * 32 /* Times Texture size */];
 
 				if (z > renderDistance) {
 					pixels[x + y * width] = 0;
@@ -66,8 +67,56 @@ public class RENDER3D extends RENDER {
 			}
 
 		}
-	}
+		
 
+	}
+	public void walls() {
+		Random random = new Random(1);
+		for (int i = 0; i < 10000; i++) {
+			double x = random.nextDouble();
+			double y = random.nextDouble();
+			double z = 2;
+
+			int xPixel = (int) (x / z * height / 2 + width / 2);
+			int yPixel = (int) (y / z * height / 2 + height / 2);
+			if (xPixel >= 0 && yPixel >= 0 && xPixel < width && yPixel < height) {
+				pixels[xPixel + yPixel * width] = 0xfffff;
+			}
+		}
+		for (int i = 0; i < 10000; i++) {
+			double x = random.nextDouble()-1;
+			double y = random.nextDouble();
+			double z = 2;
+
+			int xPixel = (int) (x / z * height / 2 + width / 2);
+			int yPixel = (int) (y / z * height / 2 + height / 2);
+			if (xPixel >= 0 && yPixel >= 0 && xPixel < width && yPixel < height) {
+				pixels[xPixel + yPixel * width] = 0xfffff;
+			}
+		}
+		for (int i = 0; i < 10000; i++) {
+			double x = random.nextDouble();
+			double y = random.nextDouble()-1;
+			double z = 2;
+
+			int xPixel = (int) (x / z * height / 2 + width / 2);
+			int yPixel = (int) (y / z * height / 2 + height / 2);
+			if (xPixel >= 0 && yPixel >= 0 && xPixel < width && yPixel < height) {
+				pixels[xPixel + yPixel * width] = 0xfffff;
+			}
+		}
+		for (int i = 0; i < 10000; i++) {
+			double x = random.nextDouble()-1;
+			double y = random.nextDouble()-1;
+			double z = 2;
+
+			int xPixel = (int) (x / z * height / 2 + width / 2);
+			int yPixel = (int) (y / z * height / 2 + height / 2);
+			if (xPixel >= 0 && yPixel >= 0 && xPixel < width && yPixel < height) {
+				pixels[xPixel + yPixel * width] = 0xfffff;
+			}
+		}
+	}
 	public void renderDistanceLimiter() {
 		for (int i = 0; i < width * height; i++) {
 			int colour = pixels[i];
@@ -91,5 +140,4 @@ public class RENDER3D extends RENDER {
 			pixels[i] = r << 16 | g << 8 | b;
 		}
 	}
-
 }
