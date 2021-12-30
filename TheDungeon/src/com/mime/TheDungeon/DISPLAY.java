@@ -97,7 +97,7 @@ public class DISPLAY extends Canvas implements Runnable {
 				ticked = true;
 				tickCount++;
 				if (tickCount % 60 == 0) {
-					System.out.println(frames + " FPS");
+					//System.out.println(frames + " FPS");
 					fps = frames;
 					previousTime += 1000;
 					frames = 0;

@@ -1,10 +1,10 @@
 package com.mime.TheDungeon.graphics;
 
 import com.mime.TheDungeon.GAME;
+import com.mime.TheDungeon.input.CONTROLLER;
 
 public class RENDER3D extends RENDER {
 
-	
 	public double[] zBuffer;
 	private double renderDistance = 5000;
 
@@ -15,24 +15,36 @@ public class RENDER3D extends RENDER {
 
 	public void floor(GAME game) {
 
-		double ceilingPosition = 10.0; //-1 for no ceiling
-		double floorPosition = 10.0;
+		double ceilingPosition = 8000; // 8000 for no ceiling
+		double floorPosition = 15.0;
 
 		double forward = game.controls.z;
 		double right = game.controls.x;
+		double up = game.controls.y;
+		double walking = Math.sin((game.time / 2.0) * 0.4);
+		if (CONTROLLER.run) {
+			walking = Math.sin((game.time / 3.0) * 1);
+		}
 
 		double rotation = game.controls.rotation;
 		double cosinus = Math.cos(rotation);
 		double sinus = Math.sin(rotation);
+		;
 
 		for (int y = 0; y < height; y++) {
 			double ceiling = (y - height / 2.0) / height;
 
-			double z = floorPosition / ceiling;
+			double z = (floorPosition + up) / ceiling;
+			if (CONTROLLER.walking) {
+				z = (floorPosition + up + walking) / ceiling;
+			}
 
 			if (ceiling < 0) {
 
-				z = ceilingPosition / -ceiling;
+				z = (ceilingPosition - up) / -ceiling;
+				if (CONTROLLER.walking) {
+					z = (ceilingPosition - up - walking) / -ceiling;
+				}
 			}
 
 			for (int x = 0; x < width; x++) {
@@ -42,8 +54,8 @@ public class RENDER3D extends RENDER {
 				double yy = z * cosinus - depth * sinus; // +forward
 				int xPix = (int) (xx + right);
 				int yPix = (int) (yy + forward);
-				zBuffer[x+y*width] = z;
-				pixels[x + y * width] = ((xPix & 15) * 16) | ((yPix & 15) * 16) << 8;
+				zBuffer[x + y * width] = z;
+				pixels[x + y * width] = TEXTURE.floor.pixels[(xPix & 7) + (yPix & 7) * 8];
 
 				if (z > renderDistance) {
 					pixels[x + y * width] = 0;
