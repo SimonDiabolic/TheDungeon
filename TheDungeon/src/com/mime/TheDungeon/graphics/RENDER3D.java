@@ -25,6 +25,9 @@ public class RENDER3D extends RENDER {
 		if (CONTROLLER.run) {
 			walking = Math.sin((game.time / 3.0) * 1);
 		}
+		if (CONTROLLER.sneak) {
+			walking = 0.0;
+		}
 
 		double rotation = game.controls.rotation;
 		double cosinus = Math.cos(rotation);

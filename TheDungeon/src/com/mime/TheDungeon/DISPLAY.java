@@ -83,13 +83,14 @@ public class DISPLAY extends Canvas implements Runnable {
 		double secondsPerTick = 1 / 60.0;
 		int tickCount = 0;
 		boolean ticked = false;
-		requestFocus();
+		
 
 		while (running) {
 			long currentTime = System.nanoTime();
 			long passedTime = currentTime - previousTime;
 			previousTime = currentTime;
 			unprocessedSeconds += passedTime / 1000000000.0;
+			requestFocus();
 
 			while (unprocessedSeconds > secondsPerTick) {
 				tick();

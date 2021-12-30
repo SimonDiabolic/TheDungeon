@@ -7,6 +7,7 @@ public class CONTROLLER {
 	public static boolean turnRight = false;
 	public static boolean walking = false;
 	public static boolean run = false;
+	public static boolean sneak = false;
 
 	public void tick(boolean forward, boolean back, boolean right, boolean left, boolean jump, boolean crouch,
 			boolean sprint) {
@@ -48,7 +49,9 @@ public class CONTROLLER {
 		}
 		if (crouch) {
 			y -= crouchHeight;
+			walkSpeed = 0.5;
 			sprint = false;
+			sneak = true;
 
 		}
 		if (sprint) {
@@ -61,6 +64,9 @@ public class CONTROLLER {
 		}
 		if (!sprint) {
 			run = false;
+		}
+		if (!crouch) {
+			sneak = false;
 		}
 
 		xa += (xMove * Math.cos(rotation) + zMove * Math.sin(rotation)) * walkSpeed;
