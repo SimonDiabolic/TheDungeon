@@ -4,14 +4,19 @@ import com.mime.TheDungeon.GAME;
 
 public class RENDER3D extends RENDER {
 
+	
+	public double[] zBuffer;
+	private double renderDistance = 5000;
+
 	public RENDER3D(int width, int height) {
 		super(width, height);
+		zBuffer = new double[width * height];
 	}
 
 	public void floor(GAME game) {
 
-		double ceilingPosition = 8.0;
-		double floorPosition = 8.0;
+		double ceilingPosition = 10.0; //-1 for no ceiling
+		double floorPosition = 10.0;
 
 		double forward = game.controls.z;
 		double right = game.controls.x;
@@ -24,6 +29,7 @@ public class RENDER3D extends RENDER {
 			double ceiling = (y - height / 2.0) / height;
 
 			double z = floorPosition / ceiling;
+
 			if (ceiling < 0) {
 
 				z = ceilingPosition / -ceiling;
@@ -32,14 +38,42 @@ public class RENDER3D extends RENDER {
 			for (int x = 0; x < width; x++) {
 				double depth = (x - width / 2.0) / height;
 				depth *= z;
-				double xx = depth * cosinus + z * sinus; //+right
-				double yy = z * cosinus - depth * sinus; //+forward
-				int xPix = (int) (xx+right);
-				int yPix = (int) (yy+forward);
+				double xx = depth * cosinus + z * sinus; // +right
+				double yy = z * cosinus - depth * sinus; // +forward
+				int xPix = (int) (xx + right);
+				int yPix = (int) (yy + forward);
+				zBuffer[x+y*width] = z;
 				pixels[x + y * width] = ((xPix & 15) * 16) | ((yPix & 15) * 16) << 8;
-//if(z > renderDistance)return
+
+				if (z > renderDistance) {
+					pixels[x + y * width] = 0;
+				}
 			}
 
+		}
+	}
+
+	public void renderDistanceLimiter() {
+		for (int i = 0; i < width * height; i++) {
+			int colour = pixels[i];
+			int brightness = (int) (renderDistance / (zBuffer[i]));
+
+			if (brightness < 0) {
+				brightness = 0;
+			}
+			if (brightness > 255) {
+				brightness = 255;
+			}
+
+			int r = (colour >> 16) & 0xff;
+			int g = (colour >> 8) & 0xff;
+			int b = (colour) & 0xff;
+
+			r = r * brightness / 255;
+			g = g * brightness / 255;
+			b = b * brightness / 255;
+
+			pixels[i] = r << 16 | g << 8 | b;
 		}
 	}
 

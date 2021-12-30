@@ -27,6 +27,7 @@ public class SCREEN extends RENDER {
 
 		}
 		render.floor(game);
+		render.renderDistanceLimiter();
 		draw(render, 0, 0);
 	}
 
