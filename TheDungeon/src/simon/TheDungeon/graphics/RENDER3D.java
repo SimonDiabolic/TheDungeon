@@ -58,7 +58,7 @@ public class RENDER3D extends RENDER {
 				int xPix = (int) (xx + right);
 				int yPix = (int) (yy + forward);
 				zBuffer[x + y * width] = z;
-				pixels[x + y * width] = TEXTURE.floor.pixels[(xPix & 7) + (yPix & 7) * 8];
+				pixels[x + y * width] = TEXTURE.floor.pixels[(xPix & 7) + (yPix & 7) * 32/*Times Texture size*/]; 
 
 				if (z > renderDistance) {
 					pixels[x + y * width] = 0;
