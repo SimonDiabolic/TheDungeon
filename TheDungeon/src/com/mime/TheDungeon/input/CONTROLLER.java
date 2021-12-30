@@ -3,8 +3,10 @@ package com.mime.TheDungeon.input;
 public class CONTROLLER {
 
 	public double x, z, rotation, xa, za, rotationa;
+	public static boolean turnLeft = false;
+	public static boolean turnRight = false;
 
-	public void tick(boolean forward, boolean back, boolean right, boolean left, boolean turnLeft, boolean turnRight) {
+	public void tick(boolean forward, boolean back, boolean right, boolean left) {
 		double rotationSpeed = 0.025;
 		double walkSpeed = 1;
 		double xMove = 0;

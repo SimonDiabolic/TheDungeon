@@ -1,8 +1,11 @@
 package com.mime.TheDungeon;
 
 import java.awt.Canvas;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
@@ -11,6 +14,7 @@ import javax.swing.JFrame;
 
 import com.mime.TheDungeon.graphics.RENDER;
 import com.mime.TheDungeon.graphics.SCREEN;
+import com.mime.TheDungeon.input.CONTROLLER;
 import com.mime.TheDungeon.input.INPUTHANDLER;
 
 public class DISPLAY extends Canvas implements Runnable {
@@ -28,6 +32,8 @@ public class DISPLAY extends Canvas implements Runnable {
 	private BufferedImage img;
 	private int pixels[];
 	private INPUTHANDLER input;
+	private int newX = 0;
+	private int oldX = 0;
 
 	public DISPLAY() {
 		Dimension size = new Dimension(width, height);
@@ -38,7 +44,7 @@ public class DISPLAY extends Canvas implements Runnable {
 		game = new GAME();
 		img = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 		pixels = ((DataBufferInt) img.getRaster().getDataBuffer()).getData();
-		
+
 		input = new INPUTHANDLER();
 		addKeyListener(input);
 		addFocusListener(input);
@@ -76,6 +82,7 @@ public class DISPLAY extends Canvas implements Runnable {
 		double secondsPerTick = 1 / 60.0;
 		int tickCount = 0;
 		boolean ticked = false;
+		requestFocus();
 
 		while (running) {
 			long currentTime = System.nanoTime();
@@ -101,6 +108,20 @@ public class DISPLAY extends Canvas implements Runnable {
 			}
 			render();
 			frames++;
+
+			newX = INPUTHANDLER.MouseX;
+			if (newX > oldX) {
+				CONTROLLER.turnRight = true;
+			}
+			if (newX < oldX) {
+				CONTROLLER.turnLeft = true;
+			}
+			if (newX == oldX) {
+				CONTROLLER.turnLeft = false;
+				CONTROLLER.turnRight = false;
+			}
+			oldX = newX;
+
 		}
 	}
 
@@ -128,10 +149,13 @@ public class DISPLAY extends Canvas implements Runnable {
 	}
 
 	public static void main(String[] args) {
+		BufferedImage cursor = new BufferedImage(16,16, BufferedImage.TYPE_INT_ARGB);
+		Cursor blank = Toolkit.getDefaultToolkit().createCustomCursor(cursor, new Point(0,0), "blank");
 		DISPLAY game = new DISPLAY();
 		JFrame frame = new JFrame();
 		frame.add(game);
 		frame.pack();
+		frame.getContentPane().setCursor(blank);
 		frame.setTitle(title);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);

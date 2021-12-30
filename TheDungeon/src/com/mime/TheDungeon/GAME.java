@@ -17,11 +17,9 @@ public class GAME {
 		boolean back = key[KeyEvent.VK_S];
 		boolean right = key[KeyEvent.VK_D];
 		boolean left = key[KeyEvent.VK_A];
-		boolean turnLeft = key[KeyEvent.VK_LEFT];
-		boolean turnRight = key[KeyEvent.VK_RIGHT];
 		//if (forward) System.out.println("W");
 		
-		controls.tick(forward, back, right, left, turnLeft, turnRight);
+		controls.tick(forward, back, right, left);
 		
 	}
 
