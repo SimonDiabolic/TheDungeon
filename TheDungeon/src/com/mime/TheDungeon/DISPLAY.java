@@ -1,17 +1,17 @@
 package com.mime.TheDungeon;
 
 import java.awt.Canvas;
+import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
-
 import javax.swing.JFrame;
-
 import com.mime.TheDungeon.graphics.RENDER;
 import com.mime.TheDungeon.graphics.SCREEN;
 import com.mime.TheDungeon.input.CONTROLLER;
@@ -34,6 +34,7 @@ public class DISPLAY extends Canvas implements Runnable {
 	private INPUTHANDLER input;
 	private int newX = 0;
 	private int oldX = 0;
+	private int fps;
 
 	public DISPLAY() {
 		Dimension size = new Dimension(width, height);
@@ -97,6 +98,7 @@ public class DISPLAY extends Canvas implements Runnable {
 				tickCount++;
 				if (tickCount % 60 == 0) {
 					System.out.println(frames + " FPS");
+					fps = frames;
 					previousTime += 1000;
 					frames = 0;
 
@@ -139,6 +141,9 @@ public class DISPLAY extends Canvas implements Runnable {
 		}
 		Graphics g = bs.getDrawGraphics();
 		g.drawImage(img, 0, 0, width, height, null);
+		g.setFont(new Font("Verdana",1,15));
+		g.setColor(Color.YELLOW);
+		g.drawString(fps+" FPS", 5, 15);
 		g.dispose();
 		bs.show();
 	}
@@ -149,8 +154,8 @@ public class DISPLAY extends Canvas implements Runnable {
 	}
 
 	public static void main(String[] args) {
-		BufferedImage cursor = new BufferedImage(16,16, BufferedImage.TYPE_INT_ARGB);
-		Cursor blank = Toolkit.getDefaultToolkit().createCustomCursor(cursor, new Point(0,0), "blank");
+		BufferedImage cursor = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
+		Cursor blank = Toolkit.getDefaultToolkit().createCustomCursor(cursor, new Point(0, 0), "blank");
 		DISPLAY game = new DISPLAY();
 		JFrame frame = new JFrame();
 		frame.add(game);
