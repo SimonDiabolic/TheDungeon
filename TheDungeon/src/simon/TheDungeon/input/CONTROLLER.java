@@ -1,4 +1,4 @@
-package com.mime.TheDungeon.input;
+package simon.TheDungeon.input;
 
 public class CONTROLLER {
 

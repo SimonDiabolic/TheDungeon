@@ -1,8 +1,8 @@
-package com.mime.TheDungeon;
+package simon.TheDungeon;
 
 import java.awt.event.KeyEvent;
 
-import com.mime.TheDungeon.input.CONTROLLER;
+import simon.TheDungeon.input.CONTROLLER;
 
 public class GAME {
 	public int time;

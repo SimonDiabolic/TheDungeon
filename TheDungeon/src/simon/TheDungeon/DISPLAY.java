@@ -1,4 +1,4 @@
-package com.mime.TheDungeon;
+package simon.TheDungeon;
 
 import java.awt.Canvas;
 import java.awt.Color;
@@ -12,10 +12,11 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import javax.swing.JFrame;
-import com.mime.TheDungeon.graphics.RENDER;
-import com.mime.TheDungeon.graphics.SCREEN;
-import com.mime.TheDungeon.input.CONTROLLER;
-import com.mime.TheDungeon.input.INPUTHANDLER;
+
+import simon.TheDungeon.graphics.RENDER;
+import simon.TheDungeon.graphics.SCREEN;
+import simon.TheDungeon.input.CONTROLLER;
+import simon.TheDungeon.input.INPUTHANDLER;
 
 public class DISPLAY extends Canvas implements Runnable {
 

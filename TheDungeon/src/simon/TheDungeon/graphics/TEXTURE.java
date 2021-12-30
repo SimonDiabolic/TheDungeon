@@ -1,4 +1,4 @@
-package com.mime.TheDungeon.graphics;
+package simon.TheDungeon.graphics;
 
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;

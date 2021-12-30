@@ -1,7 +1,7 @@
-package com.mime.TheDungeon.graphics;
+package simon.TheDungeon.graphics;
 
-import com.mime.TheDungeon.GAME;
-import com.mime.TheDungeon.input.CONTROLLER;
+import simon.TheDungeon.GAME;
+import simon.TheDungeon.input.CONTROLLER;
 
 public class RENDER3D extends RENDER {
 

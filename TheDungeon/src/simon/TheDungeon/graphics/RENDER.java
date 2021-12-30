@@ -1,4 +1,4 @@
-package com.mime.TheDungeon.graphics;
+package simon.TheDungeon.graphics;
 
 public class RENDER {
 	public final int width;

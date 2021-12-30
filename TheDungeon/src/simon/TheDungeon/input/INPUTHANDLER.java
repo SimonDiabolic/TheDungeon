@@ -1,4 +1,4 @@
-package com.mime.TheDungeon.input;
+package simon.TheDungeon.input;
 
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;

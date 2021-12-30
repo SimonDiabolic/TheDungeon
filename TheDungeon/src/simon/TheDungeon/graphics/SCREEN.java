@@ -1,8 +1,8 @@
-package com.mime.TheDungeon.graphics;
+package simon.TheDungeon.graphics;
 
 import java.util.Random;
 
-import com.mime.TheDungeon.GAME;
+import simon.TheDungeon.GAME;
 
 public class SCREEN extends RENDER {
 
